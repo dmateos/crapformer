@@ -11,6 +11,12 @@ Game = function() {
   renderer.backgroundColor = 0x0099cc;
   document.body.appendChild(renderer.view);
 
+  stage.interactive = true;
+  stage.hitArea = new PIXI.Rectangle(0, 0, 1000, 1000);
+  stage.mousedown = function(mouseData) {
+    console.log(mouseData);
+  };
+
   function animate() {
     requestAnimationFrame(animate);
 
@@ -60,33 +66,6 @@ Game = function() {
         enemies.push(enemy);
       }
   });
-
-  right.press = function() {
-    player.getSprite().vx += 3;
-    player.getSprite().play();
-    //player.getSprite().scale.x = 1
-  }
-
-  left.press = function() {
-    player.getSprite().vx -= 3;
-    player.getSprite().play();
-    //player.getSprite().scale.x = -1
-  }
-
-  right.release = function() {
-    player.getSprite().vx = 0;
-    player.getSprite().stop();
-  }
-
-  left.release = function() {
-    player.getSprite().vx = 0;
-    player.getSprite().stop();
-  }
-
-  up.press = function() {
-    player.getSprite().vy -= 10;
-    player.getSprite().y -= 20;
-  }
 
   // subscribe to the ticker
   Physics.util.ticker.on(function( time ){
