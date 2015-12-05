@@ -6,15 +6,16 @@ Game = function() {
   var enemies = [];
   var bump = new Bump(PIXI);
 
-  var world = Physics();
-
   renderer.backgroundColor = 0x0099cc;
   document.body.appendChild(renderer.view);
 
   stage.interactive = true;
   stage.hitArea = new PIXI.Rectangle(0, 0, 1000, 1000);
+
   stage.mousedown = function(mouseData) {
-    console.log(mouseData);
+    var tile = new GameObject(mouseData.data.global.x - stage.x, mouseData.data.global.y - stage.y, "grassMid.png");
+    stage.addChild(tile.getSprite());
+    tiles.push(tile);
   };
 
   function animate() {
@@ -60,18 +61,10 @@ Game = function() {
       }
 
       for(var i = 0; i < 5; i++) {
-        enemy = new Actor("Floppit000", 9, 700+(i*900), 300);
+        var enemy = new Actor("Floppit000", 9, 700+(i*900), 300);
         enemy.getSprite().play();
         stage.addChild(enemy.getSprite());
         enemies.push(enemy);
       }
   });
-
-  // subscribe to the ticker
-  Physics.util.ticker.on(function( time ){
-      world.step( time );
-  });
-  // start the ticker
-  Physics.util.ticker.start();
-
 }
