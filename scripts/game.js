@@ -26,9 +26,13 @@ Game = function() {
     var hit = false;
 
     bump.hit(sprite, tile_sprites, false, false, false, function(collision, tile) {
-      sprite.vy = 0;
       hit = collision;
-      sprite.y = tile.y - sprite.height+10;
+      console.log(collision);
+
+      if(collision == "bottom") {
+        sprite.vy = 0;
+        sprite.y = tile.y - sprite.height+10;
+      }
     });
 
     if(hit != "bottom") {
